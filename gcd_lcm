@@ -1,0 +1,149 @@
+Public Class Form19
+    Public a, b, maks As Integer
+    Private Sub Form19_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        d = ""
+        Label3.Text = ""
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        a = CInt(TextBox1.Text)
+        b = CInt(TextBox2.Text)
+        FPB_KPK.fpb(a, b)
+        FPB_KPK.kpk(a, b)
+        d = ""
+    End Sub
+End Class
+Module FPB_KPK
+    Public d As String
+    Public e As String
+    Sub fpb(a As Integer, b As Integer)
+        Dim a2, b2, c2 As Integer
+        Dim a1 As Integer() = New Integer(a) {}
+        Dim b1 As Integer() = New Integer(b) {}
+        a2 = 1
+        b2 = 0
+        c2 = 0
+        d = d + "Faktor dari Bilangan: " + a.ToString + " = "
+        While a2 <= a
+            b2 = a Mod a2
+            If b2 = 0 Then
+                a1(c2) = a2
+                d = d + a1(c2).ToString + ", "
+                c2 = c2 + 1
+            End If
+            a2 = a2 + 1
+        End While
+        d = d + vbNewLine
+        a2 = 1
+        c2 = 0
+        d = d + "Faktor dari Bilangan: " + b.ToString + " = "
+        While a2 <= b
+            b2 = b Mod a2
+            If b2 = 0 Then
+                b1(c2) = a2
+                d = d + b1(c2).ToString + ", "
+                c2 = c2 + 1
+            End If
+            a2 = a2 + 1
+        End While
+        d = d + vbNewLine
+        BandingkanArray(a1, b1)
+        My.Forms.Form19.Label3.Text = d
+    End Sub
+    Sub BandingkanArray(array1() As Integer, array2() As Integer)
+        Dim l1, l2, cumm, cumm1, cumm2 As Integer
+        l1 = array1.Length - 1
+        l2 = array2.Length - 1
+        Dim c1(10) As Integer
+        cumm = 0
+        cumm1 = 0
+        While cumm < l1
+            If array1(cumm) <> 0 Then
+                cumm1 = 0
+                While cumm1 < l2
+                    If array2(cumm1) <> 0 Then
+                        If array1(cumm) = array2(cumm1) Then
+                            c1(cumm2) = array1(cumm)
+                            cumm2 = cumm2 + 1
+                        End If
+                        'd = d + array2(cumm).ToString + ","
+                    End If
+                    cumm1 = cumm1 + 1
+                End While
+                'd = d + array1(cumm).ToString + ","
+            End If
+            cumm = cumm + 1
+        End While
+        cumm = 0
+        l2 = c1.Length
+        d = d + "Faktor Persekutuannya: "
+        While cumm < l2
+            If c1(cumm) <> 0 Then
+                d = d + c1(cumm).ToString + ", "
+            End If
+            cumm = cumm + 1
+        End While
+        d = d + vbNewLine
+        NilaiMaksimum(c1)
+    End Sub
+    Sub NilaiMaksimum(array3() As Integer)
+        Dim cumm, l2 As Integer
+        cumm = 0
+        maks = 0
+        l2 = array3.Length - 1
+        d = d + "FPB nya: "
+        While cumm < l2
+            If array3(cumm) <> 0 Then
+                If cumm = 0 Then
+                    maks = array3(cumm)
+                Else
+                    If array3(cumm) > maks Then
+                        maks = array3(cumm)
+                    End If
+                End If
+            End If
+            cumm = cumm + 1
+        End While
+        d = d + maks.ToString
+        d = d + vbNewLine
+    End Sub
+    Sub kpk(a As Integer, b As Integer)
+        e = ""
+        HimpunanPrima()
+        My.Forms.Form19.Label5.Text = e
+    End Sub
+    Sub HimpunanPrima()
+        Dim h1, h2, cumm, cumm1, b1, prima As Integer
+        Dim prim(10), cummprim As Integer
+        h1 = 10
+        b1 = 0
+        prima = 0
+        cumm = 2
+        cumm1 = 1
+        cummprim = 0
+        While cumm < h1
+            cumm1 = 1
+            prima = 0
+            While cumm1 <= cumm
+                b1 = cumm Mod cumm1
+                If b1 = 0 Then
+                    prima = prima + 1
+                End If
+                cumm1 = cumm1 + 1
+            End While
+            If prima = 2 Then
+                prim(cummprim) = cumm
+                e = e + prim(cummprim).ToString + ","
+                cummprim = cummprim + 1
+            End If
+            cumm = cumm + 1
+        End While
+        e = e + vbNewLine
+        e = e + prim.Length.ToString
+
+    End Sub
+End Module
